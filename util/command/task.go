@@ -5,7 +5,9 @@
 package command
 
 import (
+    "bytes"
     "errors"
+    "log"
     "time"
 )
 
@@ -34,10 +36,17 @@ func NewTask(cmds []string, timeout int) *Task {
 }
 
 func (t *Task) Run() {
+    var bufCmd bytes.Buffer
+    for _, cmd := range t.Commands {
+        bufCmd.WriteString(cmd)
+        bufCmd.WriteByte('\n')
+    }
+    log.Println(bufCmd.String())
     for _, cmd := range t.Commands {
         result, err := t.next(cmd)
         t.result = append(t.result, result)
         if err != nil {
+            log.Println(err)
             t.err = errors.New("task run failed, " + err.Error())
             break
         }

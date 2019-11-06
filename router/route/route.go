@@ -6,17 +6,17 @@ package route
 
 import (
     "net/http"
+    "os"
 
-    "github.com/gin-gonic/gin"
-    "github.com/dreamans/syncd/util/gopath"
-    "github.com/dreamans/syncd/util/gostring"
-    reqApi "github.com/dreamans/syncd/router/route/api"
     "github.com/dreamans/syncd"
-    "github.com/dreamans/syncd/router/user"
-    "github.com/dreamans/syncd/router/server"
-    "github.com/dreamans/syncd/router/project"
     "github.com/dreamans/syncd/router/deploy"
     "github.com/dreamans/syncd/router/middleware"
+    "github.com/dreamans/syncd/router/project"
+    reqApi "github.com/dreamans/syncd/router/route/api"
+    "github.com/dreamans/syncd/router/server"
+    "github.com/dreamans/syncd/router/user"
+    "github.com/dreamans/syncd/util/gostring"
+    "github.com/gin-gonic/gin"
 )
 
 func RegisterRoute() {
@@ -95,7 +95,8 @@ func RegisterRoute() {
 }
 
 func RegisterFeResource() {
-    parentPath, err := gopath.CurrentParentPath()
+    //parentPath, err := gopath.CurrentParentPath()
+    parentPath, err :=os.Getwd()
     if err != nil {
         syncd.App.Logger.Error("get current path failed, err[%s]", err.Error())
         return
